@@ -12,13 +12,16 @@ DESTINATION=$TMUX_HOME/plugins/tpm
 TMUX_CONF=~/.tmux.conf
 TMUX_PLUGIN_MANAGE_URL="https://github.com/tmux-plugins/tpm.git"
 
-which tmux >> /dev/null
+which tmux >>/dev/null
 if [ "$?" != "0" ]; then
   echo "Install tmux package ..."
   pm install -yqq tmux
+else
+  echo "Tmux already installed."
+  exit 0
 fi
 
-which wget >> /dev/null
+which wget >>/dev/null
 if [ "$?" != "0" ]; then
   echo "Install wget ..."
   pm install -yqq wget
@@ -27,22 +30,22 @@ fi
 # Backup
 [[ ! -d ~/.backup ]] && mkdir ~/.backup
 if [ -f $TMUX_CONF ]; then
-    echo "Backup Tmux Configure to $HOME/.backup ..."
-    [[ ! -d $TMUX_HOME ]] && mkdir $TMUX_HOME
-    mv $TMUX_CONF $TMUX_HOME
+  echo "Backup Tmux Configure to $HOME/.backup ..."
+  [[ ! -d $TMUX_HOME ]] && mkdir $TMUX_HOME
+  mv $TMUX_CONF $TMUX_HOME
 
-    tar -zcvf ~/.backup/tmux-$(date +%Y-%m-%d-at-%H-%M).tgz  $TMUX_HOME >> /dev/null 2>&1
+  tar -zcvf ~/.backup/tmux-$(date +%Y-%m-%d-at-%H-%M).tgz $TMUX_HOME >>/dev/null 2>&1
 fi
 
-rm -rf $TMUX_HOME* >> /dev/null 2>&1
+rm -rf $TMUX_HOME* >>/dev/null 2>&1
 
 # DESTINATION
 echo "Install tmux plugin manager - tpm ..."
-git clone $TMUX_PLUGIN_MANAGE_URL $DESTINATION >> /dev/null 2>&1
+git clone $TMUX_PLUGIN_MANAGE_URL $DESTINATION >>/dev/null 2>&1
 
 # Config file .tmux.conf
 echo "Config tmux config ..."
-wget https://whatwewant.github.io/confs/tmux.conf -O $TMUX_CONF >> /dev/null 2>&1
+wget https://whatwewant.github.io/confs/tmux.conf -O $TMUX_CONF >>/dev/null 2>&1
 
 # Reload TMUX environment so TPM is sourced:
 echo "Reload TMUX environment ..."
