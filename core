@@ -21,8 +21,7 @@ install() {
   # prepare context
   cd $tmp_dir
 
-  which tmux >>/dev/null
-  if [ "$?" != "0" ]; then
+  if [ "$(os::has_command tmux)" != "true" ]; then
     log::info "[$(timestamp)] install tmux core ..."
     pm install -yqq tmux
   fi
