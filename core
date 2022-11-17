@@ -1,6 +1,9 @@
 #!/bin/bash
 
 install() {
+  # prepare vars
+  local name="tmux"
+
   log::info "[$(timestamp)][package][$name] preparing ..."
 
   # get system os/arch
@@ -11,8 +14,6 @@ install() {
   local usr_bin_dir="$PACKAGE_USER_BIN_DIR"
   local tmp_dir="$PACKAGE_TMP_DIR"
 
-  # prepare vars
-  local name="tmux"
   # files
   local tmp_file="$name.tar.gz"
   local bin_file="./${name}-${PACKAGE_CORE_VERSION#v}-${platform}-${arch}/$name"
