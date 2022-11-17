@@ -6,6 +6,7 @@ help() {
   echo ""
 
   tmux --help
+  return 0
 }
 
 version() {
