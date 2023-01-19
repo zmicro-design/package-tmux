@@ -10,9 +10,14 @@ install() {
   local arch="$PACKAGE_OS_ARCH"
   local kernel="$PACKAGE_OS_KERNEL"
   local platform="$PACKAGE_OS_PLATFORM"
+
   # usr_bin_dir
   local usr_bin_dir="$PACKAGE_USER_BIN_DIR"
   local tmp_dir="$PACKAGE_TMP_DIR"
+
+  # source code
+  local source_code_repository="https://github.com/tmux/tmux"
+  local source_code=$tmp_dir/src
 
   # files
   local tmp_file="$name.tar.gz"
@@ -21,8 +26,22 @@ install() {
   # prepare context
   cd $tmp_dir
 
-  if [ "$(os::has_command tmux)" != "true" ]; then
-    log::info "[$(timestamp)] install tmux core ..."
+  log::info "[$(timestamp)] install tmux ..."
+  if [ "$BUILD_FROM_SOURCE" = "true" ]; then
+    log::info "[$(timestamp)] building from source code($source_code_repository) ..."
+    if [ -d "$source_code" ]; then
+      rm -rf $source_code
+    fi
+
+    os::git clone $source_code_repository $source_code
+    
+    cd $source_code
+    sh autogen.sh && ./configure && make && sudo make install
+    if [ "$?" != "0" ]; then
+      log::error "[$(timestamp)] failed to build from source code."
+      return 1
+    fi
+  else
     pm install -yqq tmux
   fi
 
