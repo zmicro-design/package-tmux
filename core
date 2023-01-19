@@ -36,6 +36,12 @@ install() {
     log::info "[$(timestamp)][package] install dependencies ..."
     pm install -y autoconf automake pkg-config
 
+    if [ "$(os::is_ubuntu)" = "true" ]; then
+      pm install -y libevent-dev
+    elif [ "$(os::is_centos)" = "true" ]; then
+      pm install -y libevent-devel
+    fi
+
     os::git clone --depth=1 $source_code_repository $source_code
 
     cd $source_code
