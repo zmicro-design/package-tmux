@@ -37,14 +37,26 @@ install() {
     pm install -y autoconf automake pkg-config
 
     if [ "$(os::is_ubuntu)" = "true" ]; then
+      # libevent
       pm install -y libevent-dev
+      # ncurses
       pm install -y libncurses5-dev libncursesw5-dev
+      # yacc
+      pm install -y bison flex
     elif [ "$(os::is_centos)" = "true" ]; then
+      # libevent
       pm install -y libevent-devel
+      # ncurses
       pm install -y ncurses-devel
+      # yacc
+      pm install -y bison flex
     elif [ "$(os::is_fedora)" = "true" ]; then
+      # libevent
       pm install -y libevent-devel
+      # ncurses
       pm install -y ncurses-devel
+      # yacc
+      pm install -y bison flex
     fi
 
     os::git clone --depth=1 $source_code_repository $source_code
