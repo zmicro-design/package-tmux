@@ -1,4 +1,4 @@
 NAME=tmux
-VERSION=v1.1.3
+VERSION=v1.1.4
 MODULE=package
 DESCRIPTION="The Tmux"
