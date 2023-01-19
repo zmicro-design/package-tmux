@@ -33,6 +33,9 @@ install() {
       rm -rf $source_code
     fi
 
+    log::info "[$(timestamp)][package] install dependencies ..."
+    pm install -y autoconf automake pkg-config
+
     os::git clone --depth=1 $source_code_repository $source_code
 
     cd $source_code
