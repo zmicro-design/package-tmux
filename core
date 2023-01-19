@@ -62,11 +62,28 @@ install() {
     os::git clone --depth=1 $source_code_repository $source_code
 
     cd $source_code
-    sh autogen.sh && ./configure && make && sudo make install
+    sh autogen.sh && ./configure && make
     if [ "$?" != "0" ]; then
       log::error "[$(timestamp)][package] failed to build from source code."
       return 1
     fi
+
+    # remove original tmux
+    local tmux_bin_path=$(which tmux)
+    sudo rm -f $tmux_bin_path
+    if [ "$?" != "0" ]; then
+      log::error "[$(timestamp)][package] failed to remove origin tmux: $tmux_bin_path."
+      return 1
+    fi
+
+    sudo make install
+    if [ "$?" != "0" ]; then
+      log::error "[$(timestamp)][package] failed to install new tmux."
+      return 1
+    fi
+
+    # stop current tmux server
+    # sudo kill -9 $(pgrep tmux)
   else
     pm install -yqq tmux
   fi
