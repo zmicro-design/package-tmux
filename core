@@ -33,7 +33,7 @@ install() {
       rm -rf $source_code
     fi
 
-    os::git clone $source_code_repository $source_code
+    os::git clone --depth=1 $source_code_repository $source_code
 
     cd $source_code
     sh autogen.sh && ./configure && make && sudo make install
