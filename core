@@ -38,8 +38,13 @@ install() {
 
     if [ "$(os::is_ubuntu)" = "true" ]; then
       pm install -y libevent-dev
+      pm install -y libncurses5-dev libncursesw5-dev
     elif [ "$(os::is_centos)" = "true" ]; then
       pm install -y libevent-devel
+      pm install -y ncurses-devel
+    elif [ "$(os::is_fedora)" = "true" ]; then
+      pm install -y libevent-devel
+      pm install -y ncurses-devel
     fi
 
     os::git clone --depth=1 $source_code_repository $source_code
