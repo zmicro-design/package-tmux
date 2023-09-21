@@ -117,7 +117,7 @@ install() {
   os::git clone $TMUX_PLUGIN_MANAGE_URL $DESTINATION >>/dev/null
 
   log::info "[$(timestamp)][package] download tmux config ..."
-  os::wget https://raw.githubusercontent.com/whatwewant/whatwewant.github.io/master/confs/tmux.conf -O $TMUX_CONF >>/dev/null
+  os::curl -fsL https://raw.githubusercontent.com/whatwewant/whatwewant.github.io/master/confs/tmux.conf > $TMUX_CONF >>/dev/null
 
   # Reload TMUX environment so TPM is sourced:
   log::info "[$(timestamp)][package] reload tmux environment ..."
